@@ -7,6 +7,27 @@
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
+    },
+    {
+      "name": "VAR_DAY_RATE",
+      "type": "constant",
+      "label": "day_rate",
+      "value": "0.114555",
+      "description": ""
+    },
+    {
+      "name": "VAR_NIGHT_RATE",
+      "type": "constant",
+      "label": "night_rate",
+      "value": "0.057333",
+      "description": ""
+    },
+    {
+      "name": "VAR_PULSE_UNIT",
+      "type": "constant",
+      "label": "pulse_unit",
+      "value": "0.001",
+      "description": ""
     }
   ],
   "__requires": [
@@ -58,7 +79,7 @@
   "rows": [
     {
       "collapse": false,
-      "height": 274,
+      "height": 282,
       "panels": [
         {
           "cacheTimeout": null,
@@ -70,132 +91,10 @@
             "#299c46"
           ],
           "datasource": "${DS_INFLUXDB}",
-          "decimals": 1,
-          "format": "kwatth",
+          "decimals": 2,
+          "format": "currencyGBP",
           "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
-          },
-          "hideTimeOverride": false,
-          "id": 3,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 4,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "tableColumn": "sum",
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "1m"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "mqtt_consumer",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "Pulses"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "sum"
-                  },
-                  {
-                    "params": [
-                      "*0.001"
-                    ],
-                    "type": "math"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "topic",
-                  "operator": "=",
-                  "value": "tele/electricity/adu/"
-                }
-              ]
-            }
-          ],
-          "thresholds": "",
-          "timeFrom": "12h",
-          "timeShift": null,
-          "title": "Usage 12 hours",
-          "type": "singlestat",
-          "valueFontSize": "70%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "total"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "#d44a3a",
-            "rgba(237, 129, 40, 0.89)",
-            "#299c46"
-          ],
-          "datasource": "${DS_INFLUXDB}",
-          "decimals": 1,
-          "format": "kwatth",
-          "gauge": {
-            "maxValue": 10,
+            "maxValue": 2,
             "minValue": 0,
             "show": true,
             "thresholdLabels": false,
@@ -244,6 +143,129 @@
               "groupBy": [
                 {
                   "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "mqtt_consumer",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "Pulses"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "sum"
+                  },
+                  {
+                    "params": [
+                      "* $pulse_unit * $day_rate"
+                    ],
+                    "type": "math"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "topic",
+                  "operator": "=",
+                  "value": "tele/electricity/adu/"
+                }
+              ]
+            }
+          ],
+          "thresholds": "",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Usage over time range",
+          "type": "singlestat",
+          "valueFontSize": "70%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "total"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": true,
+          "colors": [
+            "#d44a3a",
+            "rgba(237, 129, 40, 0.89)",
+            "#299c46"
+          ],
+          "datasource": "${DS_INFLUXDB}",
+          "decimals": 2,
+          "format": "currencyGBP",
+          "gauge": {
+            "maxValue": 2,
+            "minValue": 0,
+            "show": true,
+            "thresholdLabels": false,
+            "thresholdMarkers": false
+          },
+          "hideTimeOverride": false,
+          "id": 6,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 4,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "sum",
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
                     "1m"
                   ],
                   "type": "time"
@@ -274,7 +296,7 @@
                   },
                   {
                     "params": [
-                      "*0.001"
+                      "*$pulse_unit* $day_rate"
                     ],
                     "type": "math"
                   }
@@ -314,8 +336,8 @@
             "#299c46"
           ],
           "datasource": "${DS_INFLUXDB}",
-          "decimals": 2,
-          "format": "kwatth",
+          "decimals": 3,
+          "format": "currencyGBP",
           "gauge": {
             "maxValue": 0.25,
             "minValue": 0,
@@ -396,7 +418,7 @@
                   },
                   {
                     "params": [
-                      "*0.001"
+                      "* $pulse_unit * $day_rate "
                     ],
                     "type": "math"
                   }
@@ -507,7 +529,7 @@
                   },
                   {
                     "params": [
-                      "*0.001"
+                      "*0.001* 0.12367"
                     ],
                     "type": "math"
                   }
@@ -541,7 +563,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "currencyGBP",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -568,7 +590,7 @@
     },
     {
       "collapse": false,
-      "height": 250,
+      "height": 322,
       "panels": [
         {
           "aliasColors": {},
@@ -597,7 +619,7 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "span": 12,
+          "span": 5,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -713,10 +735,62 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "value": "${VAR_DAY_RATE}",
+          "text": "${VAR_DAY_RATE}"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "day_rate",
+        "options": [
+          {
+            "value": "${VAR_DAY_RATE}",
+            "text": "${VAR_DAY_RATE}"
+          }
+        ],
+        "query": "${VAR_DAY_RATE}",
+        "type": "constant"
+      },
+      {
+        "current": {
+          "value": "${VAR_NIGHT_RATE}",
+          "text": "${VAR_NIGHT_RATE}"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "night_rate",
+        "options": [
+          {
+            "value": "${VAR_NIGHT_RATE}",
+            "text": "${VAR_NIGHT_RATE}"
+          }
+        ],
+        "query": "${VAR_NIGHT_RATE}",
+        "type": "constant"
+      },
+      {
+        "current": {
+          "value": "${VAR_PULSE_UNIT}",
+          "text": "${VAR_PULSE_UNIT}"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "pulse_unit",
+        "options": [
+          {
+            "value": "${VAR_PULSE_UNIT}",
+            "text": "${VAR_PULSE_UNIT}"
+          }
+        ],
+        "query": "${VAR_PULSE_UNIT}",
+        "type": "constant"
+      }
+    ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now/d",
     "to": "now"
   },
   "timepicker": {
