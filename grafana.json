@@ -94,11 +94,11 @@
           "decimals": 2,
           "format": "currencyGBP",
           "gauge": {
-            "maxValue": 2,
+            "maxValue": 5,
             "minValue": 0,
             "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
+            "thresholdLabels": true,
+            "thresholdMarkers": true
           },
           "hideTimeOverride": false,
           "id": 2,
@@ -143,7 +143,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "$__interval"
+                    "12h"
                   ],
                   "type": "time"
                 },
@@ -190,9 +190,10 @@
             }
           ],
           "thresholds": "",
-          "timeFrom": null,
+          "timeFrom": "12h",
           "timeShift": null,
-          "title": "Usage over time range",
+          "title": "Usage over last 12 hours",
+          "transparent": true,
           "type": "singlestat",
           "valueFontSize": "70%",
           "valueMaps": [
@@ -217,11 +218,11 @@
           "decimals": 2,
           "format": "currencyGBP",
           "gauge": {
-            "maxValue": 2,
+            "maxValue": 1,
             "minValue": 0,
             "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
+            "thresholdLabels": true,
+            "thresholdMarkers": true
           },
           "hideTimeOverride": false,
           "id": 6,
@@ -314,7 +315,8 @@
           "thresholds": "",
           "timeFrom": "1h",
           "timeShift": null,
-          "title": "Usage last hour",
+          "title": "Usage over last hour",
+          "transparent": true,
           "type": "singlestat",
           "valueFontSize": "70%",
           "valueMaps": [
@@ -339,11 +341,11 @@
           "decimals": 3,
           "format": "currencyGBP",
           "gauge": {
-            "maxValue": 0.25,
+            "maxValue": 0.1,
             "minValue": 0,
             "show": true,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
+            "thresholdLabels": true,
+            "thresholdMarkers": true
           },
           "hideTimeOverride": false,
           "id": 4,
@@ -388,7 +390,7 @@
               "groupBy": [
                 {
                   "params": [
-                    "1m"
+                    "30s"
                   ],
                   "type": "time"
                 },
@@ -414,7 +416,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "sum"
                   },
                   {
                     "params": [
@@ -434,10 +436,10 @@
             }
           ],
           "thresholds": "",
-          "timeFrom": "1m",
+          "timeFrom": "30s",
           "timeShift": null,
-          "title": "Current (per minute)",
-          "transparent": false,
+          "title": "Usage over last 30s",
+          "transparent": true,
           "type": "singlestat",
           "valueFontSize": "70%",
           "valueMaps": [
@@ -504,7 +506,7 @@
                 },
                 {
                   "params": [
-                    "linear"
+                    "null"
                   ],
                   "type": "fill"
                 }
@@ -525,7 +527,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "sum"
                   },
                   {
                     "params": [
@@ -590,7 +592,7 @@
     },
     {
       "collapse": false,
-      "height": 322,
+      "height": 295,
       "panels": [
         {
           "aliasColors": {},
@@ -619,7 +621,7 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "span": 5,
+          "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -656,7 +658,7 @@
                   },
                   {
                     "params": [],
-                    "type": "mean"
+                    "type": "sum"
                   },
                   {
                     "params": [
@@ -790,7 +792,7 @@
     ]
   },
   "time": {
-    "from": "now/d",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -820,5 +822,5 @@
   },
   "timezone": "",
   "title": "Electricity",
-  "version": 3
+  "version": 6
 }
