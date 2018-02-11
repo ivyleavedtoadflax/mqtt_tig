@@ -39,7 +39,6 @@ test_mqtt:
 influxdb_latest:
 	sudo docker exec -it influxdb influx \
 	-precision rfc3339 -database $(DATABASE) \
-	-execute "select last(Pulses) as Pulses, \
+	-execute "select last(Pulses) as Pulses, Cost, Night, \
 	time from /.*/"
-
 .PHONY: clean test_mqtt influxdb_latest nuke_data clean_docker clean_docker_containers

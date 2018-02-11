@@ -9,24 +9,24 @@
       "pluginName": "InfluxDB"
     },
     {
+      "name": "VAR_MQTT_TOPIC",
+      "type": "constant",
+      "label": "mqtt_topic",
+      "value": "tele/electricity/",
+      "description": ""
+    },
+    {
       "name": "VAR_DAY_RATE",
       "type": "constant",
       "label": "day_rate",
-      "value": "0.114555",
+      "value": "0.15158",
       "description": ""
     },
     {
-      "name": "VAR_NIGHT_RATE",
+      "name": "VAR_PULSE_RATE",
       "type": "constant",
-      "label": "night_rate",
-      "value": "0.057333",
-      "description": ""
-    },
-    {
-      "name": "VAR_PULSE_UNIT",
-      "type": "constant",
-      "label": "pulse_unit",
-      "value": "0.001",
+      "label": "pulse_rate",
+      "value": "0.00025",
       "description": ""
     }
   ],
@@ -79,7 +79,7 @@
   "rows": [
     {
       "collapse": false,
-      "height": 289,
+      "height": 218,
       "panels": [
         {
           "cacheTimeout": null,
@@ -92,7 +92,7 @@
           ],
           "datasource": "${DS_INFLUXDB}",
           "decimals": 2,
-          "format": "currencyGBP",
+          "format": "currencyEUR",
           "gauge": {
             "maxValue": 10,
             "minValue": 0,
@@ -143,18 +143,17 @@
               "groupBy": [
                 {
                   "params": [
-                    "12h"
+                    "1h"
                   ],
                   "type": "time"
                 },
                 {
                   "params": [
-                    "linear"
+                    "null"
                   ],
                   "type": "fill"
                 }
               ],
-              "hide": false,
               "measurement": "mqtt_consumer",
               "orderByTime": "ASC",
               "policy": "default",
@@ -174,7 +173,7 @@
                   },
                   {
                     "params": [
-                      "* $pulse_unit * $day_rate"
+                      "* $pulse_rate * $day_rate"
                     ],
                     "type": "math"
                   }
@@ -183,8 +182,8 @@
               "tags": [
                 {
                   "key": "topic",
-                  "operator": "=",
-                  "value": "tele/electricity/adu/"
+                  "operator": "=~",
+                  "value": "/^$mqtt_topic$/"
                 }
               ]
             }
@@ -216,7 +215,7 @@
           ],
           "datasource": "${DS_INFLUXDB}",
           "decimals": 2,
-          "format": "currencyGBP",
+          "format": "currencyEUR",
           "gauge": {
             "maxValue": 3,
             "minValue": 0,
@@ -253,7 +252,7 @@
               "to": "null"
             }
           ],
-          "span": 4,
+          "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -278,6 +277,7 @@
                   "type": "fill"
                 }
               ],
+              "hide": false,
               "measurement": "mqtt_consumer",
               "orderByTime": "ASC",
               "policy": "default",
@@ -297,7 +297,7 @@
                   },
                   {
                     "params": [
-                      "*$pulse_unit* $day_rate"
+                      "* $pulse_rate * $day_rate"
                     ],
                     "type": "math"
                   }
@@ -306,8 +306,8 @@
               "tags": [
                 {
                   "key": "topic",
-                  "operator": "=",
-                  "value": "tele/electricity/adu/"
+                  "operator": "=~",
+                  "value": "/^$mqtt_topic$/"
                 }
               ]
             }
@@ -339,7 +339,7 @@
           ],
           "datasource": "${DS_INFLUXDB}",
           "decimals": 3,
-          "format": "currencyGBP",
+          "format": "currencyEUR",
           "gauge": {
             "maxValue": 0.035,
             "minValue": 0,
@@ -420,7 +420,7 @@
                   },
                   {
                     "params": [
-                      "* $pulse_unit * $day_rate "
+                      "* $pulse_rate * $day_rate"
                     ],
                     "type": "math"
                   }
@@ -429,8 +429,8 @@
               "tags": [
                 {
                   "key": "topic",
-                  "operator": "=",
-                  "value": "tele/electricity/adu/"
+                  "operator": "=~",
+                  "value": "/^$mqtt_topic$/"
                 }
               ]
             }
@@ -463,7 +463,7 @@
           "datasource": "${DS_INFLUXDB}",
           "decimals": 2,
           "description": "Select a time interval from the top right corner of the screen",
-          "format": "currencyGBP",
+          "format": "currencyEUR",
           "gauge": {
             "maxValue": 1,
             "minValue": 0,
@@ -500,7 +500,7 @@
               "to": "null"
             }
           ],
-          "span": 2,
+          "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -544,7 +544,7 @@
                   },
                   {
                     "params": [
-                      "*$pulse_unit* $day_rate"
+                      "*$day_rate * $pulse_rate"
                     ],
                     "type": "math"
                   }
@@ -553,8 +553,8 @@
               "tags": [
                 {
                   "key": "topic",
-                  "operator": "=",
-                  "value": "tele/electricity/adu/"
+                  "operator": "=~",
+                  "value": "/^$mqtt_topic$/"
                 }
               ]
             }
@@ -638,7 +638,7 @@
               "hide": false,
               "measurement": "mqtt_consumer",
               "orderByTime": "ASC",
-              "policy": "default",
+              "policy": "autogen",
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -655,7 +655,7 @@
                   },
                   {
                     "params": [
-                      "*0.001* 0.12367"
+                      "*$pulse_rate * $day_rate"
                     ],
                     "type": "math"
                   }
@@ -664,8 +664,8 @@
               "tags": [
                 {
                   "key": "topic",
-                  "operator": "=",
-                  "value": "tele/electricity/adu/"
+                  "operator": "=~",
+                  "value": "/^$mqtt_topic$/"
                 }
               ]
             }
@@ -690,7 +690,7 @@
           },
           "yaxes": [
             {
-              "format": "currencyGBP",
+              "format": "currencyEUR",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -775,7 +775,7 @@
                   },
                   {
                     "params": [
-                      "*0.001* 0.12367"
+                      "*$pulse_rate * $day_rate"
                     ],
                     "type": "math"
                   }
@@ -784,8 +784,8 @@
               "tags": [
                 {
                   "key": "topic",
-                  "operator": "=",
-                  "value": "tele/electricity/adu/"
+                  "operator": "=~",
+                  "value": "/^$mqtt_topic$/"
                 }
               ]
             }
@@ -810,7 +810,7 @@
           },
           "yaxes": [
             {
-              "format": "currencyGBP",
+              "format": "currencyEUR",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -843,6 +843,23 @@
     "list": [
       {
         "current": {
+          "value": "${VAR_MQTT_TOPIC}",
+          "text": "${VAR_MQTT_TOPIC}"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "mqtt_topic",
+        "options": [
+          {
+            "value": "${VAR_MQTT_TOPIC}",
+            "text": "${VAR_MQTT_TOPIC}"
+          }
+        ],
+        "query": "${VAR_MQTT_TOPIC}",
+        "type": "constant"
+      },
+      {
+        "current": {
           "value": "${VAR_DAY_RATE}",
           "text": "${VAR_DAY_RATE}"
         },
@@ -860,36 +877,19 @@
       },
       {
         "current": {
-          "value": "${VAR_NIGHT_RATE}",
-          "text": "${VAR_NIGHT_RATE}"
+          "value": "${VAR_PULSE_RATE}",
+          "text": "${VAR_PULSE_RATE}"
         },
         "hide": 0,
         "label": null,
-        "name": "night_rate",
+        "name": "pulse_rate",
         "options": [
           {
-            "value": "${VAR_NIGHT_RATE}",
-            "text": "${VAR_NIGHT_RATE}"
+            "value": "${VAR_PULSE_RATE}",
+            "text": "${VAR_PULSE_RATE}"
           }
         ],
-        "query": "${VAR_NIGHT_RATE}",
-        "type": "constant"
-      },
-      {
-        "current": {
-          "value": "${VAR_PULSE_UNIT}",
-          "text": "${VAR_PULSE_UNIT}"
-        },
-        "hide": 0,
-        "label": null,
-        "name": "pulse_unit",
-        "options": [
-          {
-            "value": "${VAR_PULSE_UNIT}",
-            "text": "${VAR_PULSE_UNIT}"
-          }
-        ],
-        "query": "${VAR_PULSE_UNIT}",
+        "query": "${VAR_PULSE_RATE}",
         "type": "constant"
       }
     ]
@@ -925,5 +925,5 @@
   },
   "timezone": "",
   "title": "Electricity",
-  "version": 9
+  "version": 15
 }
