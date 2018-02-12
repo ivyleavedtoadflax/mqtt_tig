@@ -79,7 +79,7 @@
   "rows": [
     {
       "collapse": false,
-      "height": 218,
+      "height": 232,
       "panels": [
         {
           "cacheTimeout": null,
@@ -585,7 +585,7 @@
     },
     {
       "collapse": false,
-      "height": 290,
+      "height": 238,
       "panels": [
         {
           "aliasColors": {},
@@ -717,7 +717,7 @@
     },
     {
       "collapse": false,
-      "height": 304,
+      "height": 256,
       "panels": [
         {
           "aliasColors": {},
@@ -746,7 +746,7 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "span": 12,
+          "span": 6,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -838,19 +838,7 @@
               "show": true
             }
           ]
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": false,
-      "title": "Dashboard Row",
-      "titleSize": "h6"
-    },
-    {
-      "collapse": false,
-      "height": 267,
-      "panels": [
+        },
         {
           "aliasColors": {},
           "bars": false,
@@ -1070,5 +1058,5 @@
   },
   "timezone": "",
   "title": "Electricity",
-  "version": 16
+  "version": 17
 }
