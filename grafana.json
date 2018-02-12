@@ -94,7 +94,7 @@
           "decimals": 2,
           "format": "currencyEUR",
           "gauge": {
-            "maxValue": 10,
+            "maxValue": 5,
             "minValue": 0,
             "show": true,
             "thresholdLabels": true,
@@ -217,7 +217,7 @@
           "decimals": 2,
           "format": "currencyEUR",
           "gauge": {
-            "maxValue": 3,
+            "maxValue": 1,
             "minValue": 0,
             "show": true,
             "thresholdLabels": true,
@@ -341,7 +341,7 @@
           "decimals": 3,
           "format": "currencyEUR",
           "gauge": {
-            "maxValue": 0.035,
+            "maxValue": 0.05,
             "minValue": 0,
             "show": true,
             "thresholdLabels": true,
